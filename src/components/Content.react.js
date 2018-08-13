@@ -25,12 +25,13 @@ var Content = React.createClass({
   },
 
   _onClick(){
+    console.log("Send data" + this.state.content);
     WebsocketActions.sendData(this.state.content);
   },
 
   _onClear(){
     this.setState({
-      content: ""
+      content: ''
     })
   },
 

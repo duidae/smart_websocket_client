@@ -1,14 +1,13 @@
 import React from 'react';
 import WebsocketStore from '../stores/WebsocketStore';
-import styles from '../assets/styles/components/result.css';
+import styles from '../assets/styles/components/log.css';
 import buttonStyles from '../assets/styles/components/button.css'
 import AceEditor from 'react-ace';
 import 'brace/mode/javascript';
 import 'brace/theme/github';
 import beautifier from 'js-beautify';
 
-
-var Result = React.createClass({
+var Log = React.createClass({
   getInitialState() {
     return {
       content: this.props.content
@@ -47,7 +46,7 @@ var Result = React.createClass({
     return (
       <div className={styles.root}>
         <div className={styles.control}>
-         <label className={styles.label}>History: </label>
+         <label className={styles.label}>Log: </label>
          <button type="button" className={buttonStyles.buttonClear} onClick={this._onClear}>Clear</button>
          <input className={styles.input} type="checkbox">Decode with protocol buffer</input>
         </div>
@@ -55,7 +54,7 @@ var Result = React.createClass({
           className={styles.contentEditor}
           height="400"
           width="50%"
-          name="resultEditor"
+          name="logEditor"
           value={this._formattedCode(this.state.content)}
           readOnly={true}
           editorProps={{$blockScrolling: Infinity}}
@@ -65,4 +64,4 @@ var Result = React.createClass({
   }
 });
 
-export default Result;
+export default Log;
