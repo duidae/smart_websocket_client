@@ -13,17 +13,19 @@ CARTA Websocket Client is a websocket tool to simulate websocket server/client f
 * Account system, you can share the messages to your team. 
 
 # Install && Build
+## 1. install necessary packages
+> $ npm install // install dependencies
 
-> npm install // install dependencies
+## 2. get protobuf
+> $ cd protobuf
+> $ git submodule init
+> $ git submodule update
+> $ git checkout master
 
-You should run npm install first before the following operation. 
-
-> npm run watch // you can open localhost:8080 to try it
-
-> npm run build // generate build files in dist folder
-
+## 3. Build & run
+> $ npm run watch // you can open localhost:8080 to try it
+> $ npm run build // generate build files in dist folder
 > PRODUCTION=1 npm run build // build minified version of build files
-
 > open http://localhost:8080
 
 # License
