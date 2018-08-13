@@ -24,8 +24,11 @@ CARTA Websocket Client is a websocket tool to simulate websocket server/client f
 
 ## 3. Build & run
 > $ npm run watch // you can open localhost:8080 to try it
+
 > $ npm run build // generate build files in dist folder
+
 > PRODUCTION=1 npm run build // build minified version of build files
+
 > open http://localhost:8080
 
 # License
