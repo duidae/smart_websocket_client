@@ -3,9 +3,6 @@ import WebsocketStore from '../stores/WebsocketStore';
 import styles from '../assets/styles/components/log.css';
 import buttonStyles from '../assets/styles/components/button.css'
 import AceEditor from 'react-ace';
-import 'brace/mode/javascript';
-import 'brace/theme/github';
-import beautifier from 'js-beautify';
 
 var Log = React.createClass({
   getInitialState() {
@@ -34,12 +31,8 @@ var Log = React.createClass({
 
   _onClear() {
     this.setState({
-      content: ""
+      content: ''
     });
-  },
-
-  _formattedCode(content) {
-    return content && beautifier(content, {indent_size: 2})
   },
 
   render() {
@@ -55,7 +48,7 @@ var Log = React.createClass({
           height="400"
           width="50%"
           name="logEditor"
-          value={this._formattedCode(this.state.content)}
+          value={this.state.content}
           readOnly={true}
           editorProps={{$blockScrolling: Infinity}}
           />
