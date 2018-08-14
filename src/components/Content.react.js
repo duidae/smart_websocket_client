@@ -4,15 +4,12 @@ import WebsocketStore from '../stores/WebsocketStore'
 import styles from '../assets/styles/components/content.css'
 import buttonStyles from '../assets/styles/components/button.css'
 import AceEditor from 'react-ace';
-import 'brace/mode/javascript';
-import 'brace/theme/github';
-import beautifier from 'js-beautify';
-
 
 var Content = React.createClass({
   getInitialState() {
     return {
-      content: ''
+      content: '',
+      checked: true
     }
   },
 
@@ -25,14 +22,14 @@ var Content = React.createClass({
   },
 
   _onClick(){
-    console.log("Send data" + this.state.content);
-    WebsocketActions.sendData(this.state.content);
+    WebsocketActions.sendData(this.state.checked, this.state.content);
   },
 
   _onClear(){
     this.setState({
       content: ''
     })
+    WebsocketActions.requestDataChanged('');
   },
 
   _onContentChange(data) {
@@ -45,6 +42,12 @@ var Content = React.createClass({
     })
   },
 
+  _onCheck(){
+    this.setState({
+      checked: !(this.state.checked)
+    })
+  },
+
   render() {
     return (
       <div className={styles.root}>
@@ -52,7 +55,7 @@ var Content = React.createClass({
          <label className={styles.label}>Edit a message to send:</label>
          <button type="button" className={buttonStyles.button} onClick={this._onClick}>Send</button>
          <button type="button" className={buttonStyles.buttonClear} onClick={this._onClear}>Clear</button>
-         <input className={styles.input} type="checkbox">Encode with protocol buffer</input>
+         <input className={styles.input} type="checkbox" checked={this.state.checked} onChange={this._onCheck}>Encode with protocol buffer</input>
         </div>
         <AceEditor
           className={styles.contentEditor}

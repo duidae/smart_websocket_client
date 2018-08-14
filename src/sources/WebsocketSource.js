@@ -8,7 +8,6 @@ export const MESSAGE_EVENT = 'message';
 export const EXCEPTION_EVENT = 'exception';
 export const SENT_EVENT = 'sent';
 
-
 var self;
 
 class WebsocketSource {
@@ -28,9 +27,12 @@ class WebsocketSource {
     return this;
   }
 
-  send(data) {
+  send(checked, data) {
+    if(checked)
+      data = data;
     if (this.connection && this.connection.readyState === WebSocket.OPEN) {
       if(__DEV__) {
+        console.log('using protobuf:', checked);
         console.log('sending data:', data);
       }
       this.emit(SENT_EVENT, {

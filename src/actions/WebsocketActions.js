@@ -24,8 +24,8 @@ class WebsocketActions {
     WebsocketSource.close();
   }
 
-  sendData(data) {
-    WebsocketSource.send(data);
+  sendData(checked, data) {
+    WebsocketSource.send(checked, data);
   }
 
   dataSent(request) {
