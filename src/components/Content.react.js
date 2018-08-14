@@ -88,7 +88,7 @@ var Content = React.createClass({
           <input className={styles.input} type="checkbox" checked={this.state.contentStore.useProtobuf} onChange={this._onCheck}>Encode with protocol buffer</input>
         </div>
         <div>
-          <textarea className={styles.textarea} value={this.state.contentStore.payload} onChange={this._onPayloadChange}></textarea>
+          <textarea className={styles.textarea} placeholder="Enter payload here..." value={this.state.contentStore.payload} onChange={this._onPayloadChange}></textarea>
         </div>
       </div>
     );

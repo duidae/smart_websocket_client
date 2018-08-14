@@ -2,7 +2,6 @@ import React from 'react';
 import WebsocketStore from '../stores/WebsocketStore';
 import styles from '../assets/styles/components/log.css';
 import buttonStyles from '../assets/styles/components/button.css'
-import AceEditor from 'react-ace';
 
 var Log = React.createClass({
   getInitialState() {
@@ -43,15 +42,7 @@ var Log = React.createClass({
          <button type="button" className={buttonStyles.buttonClear} onClick={this._onClear}>Clear</button>
          <input className={styles.input} type="checkbox">Decode with protocol buffer</input>
         </div>
-        <AceEditor
-          className={styles.contentEditor}
-          height="400"
-          width="100%"
-          name="logEditor"
-          value={this.state.content}
-          readOnly={true}
-          editorProps={{$blockScrolling: Infinity}}
-          />
+        <textarea className={styles.textarea} value={this.state.content} readOnly={true} editorProps={{$blockScrolling: Infinity}}></textarea>
       </div>
     );
   }

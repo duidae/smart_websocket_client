@@ -9,6 +9,7 @@ class WebsocketStore {
     this.address = 'ws://localhost:3002';
     this.request_data = '';
     this.errorMessage = null;
+    this.msg = [];
 
     this.bindListeners({
       handleWebsocketOpened: WebsocketActions.WEBSOCKET_OPENED,

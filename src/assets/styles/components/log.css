@@ -19,6 +19,14 @@
   margin-left: 8px;
 }
 
+.textarea {
+  margin-top: 8px;
+  width: 100%;
+  border: 1px solid lightgray;
+  height: 400px;
+  background-color: lightgray;
+}
+
 .contentEditor {
   margin-top: 8px;
   width: 100%;
