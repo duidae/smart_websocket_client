@@ -1,15 +1,15 @@
 import React from 'react';
 import WebsocketActions from '../actions/WebsocketActions'
 import WebsocketStore from '../stores/WebsocketStore'
+import ContentStore from '../stores/ContentStore'
 import styles from '../assets/styles/components/content.css'
 import buttonStyles from '../assets/styles/components/button.css'
-import AceEditor from 'react-ace';
 
 var Content = React.createClass({
   getInitialState() {
+    var contentStore = ContentStore.getState();
     return {
-      content: '',
-      checked: true
+      contentStore: contentStore
     }
   },
 
@@ -22,29 +22,50 @@ var Content = React.createClass({
   },
 
   _onClick(){
-    WebsocketActions.sendData(this.state.checked, this.state.content);
+    WebsocketActions.sendData(this.state.contentStore);
   },
 
   _onClear(){
+    this.state.contentStore.eventName = '';
+    this.state.contentStore.eventId = '';
+    this.state.contentStore.payload = '';
     this.setState({
-      content: ''
+      contentStore: this.state.contentStore
     })
     WebsocketActions.requestDataChanged('');
   },
 
-  _onContentChange(data) {
-    WebsocketActions.requestDataChanged(data);
-  },
-
   _onChange(state) {
     this.setState({
-      content: state.request_data
+      contentStore: this.state.contentStore
     })
   },
 
   _onCheck(){
+    this.state.contentStore.useProtobuf = !this.state.contentStore.useProtobuf;
     this.setState({
-      checked: !(this.state.checked)
+      contentStore: this.state.contentStore
+    })
+  },
+
+  _onEventNameChange(event){
+    this.state.contentStore.eventName = event.target.value;
+    this.setState({
+      contentStore: this.state.contentStore
+    })
+  },
+
+  _onEventIdChange(event){
+    this.state.contentStore.eventId = event.target.value;
+    this.setState({
+      contentStore: this.state.contentStore
+    })
+  },
+
+  _onPayloadChange(event){
+    this.state.contentStore.payload = event.target.value;
+    this.setState({
+      contentStore: this.state.contentStore
     })
   },
 
@@ -53,20 +74,22 @@ var Content = React.createClass({
       <div className={styles.root}>
         <div className={styles.control}>
          <label className={styles.label}>Edit a message to send:</label>
-         <button type="button" className={buttonStyles.button} onClick={this._onClick}>Send</button>
-         <button type="button" className={buttonStyles.buttonClear} onClick={this._onClear}>Clear</button>
-         <input className={styles.input} type="checkbox" checked={this.state.checked} onChange={this._onCheck}>Encode with protocol buffer</input>
         </div>
-        <AceEditor
-          className={styles.contentEditor}
-          height="300"
-          width="50%"
-          tabSize={2}
-          onChange={this._onContentChange}
-          name="contentEditor"
-          value={this.state.content}
-          editorProps={{$blockScrolling: Infinity}}
-        />
+        <div>
+          <label className={styles.label}>Event name:</label><input value={this.state.contentStore.eventName} onChange={this._onEventNameChange}/>
+        </div>
+        <div>
+          <label className={styles.label}>Event id:</label><input value={this.state.contentStore.eventId} onChange={this._onEventIdChange}/>
+        </div>
+        <div>
+          <label className={styles.label}>Event payload:</label>
+          <button type="button" className={buttonStyles.button} onClick={this._onClick}>Send</button>
+          <button type="button" className={buttonStyles.buttonClear} onClick={this._onClear}>Clear</button>
+          <input className={styles.input} type="checkbox" checked={this.state.contentStore.useProtobuf} onChange={this._onCheck}>Encode with protocol buffer</input>
+        </div>
+        <div>
+          <textarea className={styles.textarea} value={this.state.contentStore.payload} onChange={this._onPayloadChange}></textarea>
+        </div>
       </div>
     );
   }

@@ -46,7 +46,7 @@ var Log = React.createClass({
         <AceEditor
           className={styles.contentEditor}
           height="400"
-          width="50%"
+          width="100%"
           name="logEditor"
           value={this.state.content}
           readOnly={true}
