@@ -30,36 +30,9 @@ class WebsocketSource {
   }
 
   send(contentStore) {
-    let eventData;
+    let eventData = '';
     if(contentStore.useProtobuf) { // encode protobuf here
-      let encodedMessage = '';
-
-      if (contentStore.eventName === "REGISTER_VIEWER") {
-        encodedMessage = CARTA.RegisterViewer.encode(eventData);
-      }
-      else if (contentStore.eventName === "FILE_LIST_REQUEST") {
-        encodedMessage = CARTA.FileListRequest.encode(eventData);
-      }
-      else if (contentStore.eventName === "FILE_INFO_REQUEST") {
-        encodedMessage = CARTA.FileInfoRequest.encode(eventData);
-      }
-      else if (contentStore.eventName === "OPEN_FILE") {
-        encodedMessage = CARTA.OpenFile.encode(eventData);
-      }
-      else if (contentStore.eventName === "CLOSE_FILE") {
-        encodedMessage = CARTA.CloseFile.encode(eventData);
-      }
-      else if (contentStore.eventName === "SET_IMAGE_VIEW") {
-        encodedMessage = CARTA.SetImageView.encode(eventData);
-      }
-      else {
-          console.log(`Unsupported event response ${contentStore.eventName}`);
-      }
-
-      eventData = new Uint8Array(32 + 4 + encodedMessage.byteLength);
-      eventData.set(this.stringToUint8Array(contentStore.eventName, 32));
-      eventData.set(new Uint8Array(new Uint32Array([contentStore.eventId]).buffer), 32);
-      eventData.set(encodedMessage, 36);
+      //eventData = this.encodeEvent(contentStore.eventName, contentStore.eventId, contentStore.payload);
     }
     else {
       eventData = contentStore.eventName + contentStore.eventId + contentStore.payload;
@@ -108,6 +81,38 @@ class WebsocketSource {
 
   _onMessage(event) {
     self.emit(MESSAGE_EVENT, event.data)
+  }
+
+  encodeEvent(eventName, eventId, payload) {
+    let encodedMessage = '';
+
+    if (contentStore.eventName === "REGISTER_VIEWER") {
+      encodedMessage = CARTA.RegisterViewer.encode(eventData);
+    }
+    else if (contentStore.eventName === "FILE_LIST_REQUEST") {
+      encodedMessage = CARTA.FileListRequest.encode(eventData);
+    }
+    else if (contentStore.eventName === "FILE_INFO_REQUEST") {
+      encodedMessage = CARTA.FileInfoRequest.encode(eventData);
+    }
+    else if (contentStore.eventName === "OPEN_FILE") {
+      encodedMessage = CARTA.OpenFile.encode(eventData);
+    }
+    else if (contentStore.eventName === "CLOSE_FILE") {
+      encodedMessage = CARTA.CloseFile.encode(eventData);
+    }
+    else if (contentStore.eventName === "SET_IMAGE_VIEW") {
+      encodedMessage = CARTA.SetImageView.encode(eventData);
+    }
+    else {
+      console.log(`Unsupported event response ${contentStore.eventName}`);
+    }
+
+    eventData = new Uint8Array(32 + 4 + encodedMessage.byteLength);
+    eventData.set(this.stringToUint8Array(eventName, 32));
+    eventData.set(new Uint8Array(new Uint32Array([eventId]).buffer), 32);
+    eventData.set(encodedMessage, 36);
+    return encodedMessage;
   }
 
   stringToUint8Array(str, padLength) {
