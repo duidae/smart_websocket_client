@@ -1,48 +1,43 @@
 import React from 'react';
-import WebsocketStore from '../stores/WebsocketStore';
+import HistoryStore from '../stores/HistoryStore';
+import HistoryActions from '../actions/HistoryActions';
 import styles from '../assets/styles/components/log.css';
-import buttonStyles from '../assets/styles/components/button.css'
 
 var Log = React.createClass({
   getInitialState() {
     return {
-      content: this.props.content
+      requests: []
     }
   },
 
   componentDidMount() {
-    WebsocketStore.listen(this._onChange);
+    HistoryStore.listen(this._onChange);
+    HistoryActions.setupDatabase();
   },
 
   componentWillUnmount() {
-    WebsocketStore.unlisten(this._onChange);
-  },
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return !(nextState.content === this.state.content);
+    HistoryStore.unlisten(this._onChange);
   },
 
   _onChange(state) {
     this.setState({
-      content: state.data
-    });
-  },
-
-  _onClear() {
-    this.setState({
-      content: ''
+      requests: state.requests
     });
   },
 
   render() {
+    let log = '';
+    for(let i = 0; i < this.state.requests.length; i++) {
+      log += (this.state.requests[i].id + ' ' + this.state.requests[i].type + ' ' + this.state.requests[i].data + '\n');
+    }
+
     return (
       <div className={styles.root}>
         <div className={styles.control}>
          <label className={styles.label}>Log: </label>
-         <button type="button" className={buttonStyles.buttonClear} onClick={this._onClear}>Clear</button>
          <input className={styles.input} type="checkbox">Decode with protocol buffer</input>
         </div>
-        <textarea className={styles.textarea} value={this.state.content} readOnly={true} editorProps={{$blockScrolling: Infinity}}></textarea>
+        <textarea className={styles.textarea} value={log} readOnly={true} editorProps={{$blockScrolling: Infinity}}></textarea>
       </div>
     );
   }

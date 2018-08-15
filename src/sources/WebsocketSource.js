@@ -47,6 +47,7 @@ class WebsocketSource {
       }
       this.emit(SENT_EVENT, {
         address: this.connection.url,
+        type: "Client sent",
         data: eventData
       });
       this.connection.send(eventData);
@@ -80,7 +81,10 @@ class WebsocketSource {
   }
 
   _onMessage(event) {
-    self.emit(MESSAGE_EVENT, event.data)
+    self.emit(MESSAGE_EVENT, {
+      type: "Server respond",
+      data: event.data
+    });
   }
 
   encodeEvent(eventName, eventId, payload) {

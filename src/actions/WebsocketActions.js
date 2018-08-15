@@ -47,11 +47,11 @@ class WebsocketActions {
     this.dispatch(message);
   }
 
-  websocketReceived(data) {
+  websocketReceived(respond) {
     if(__DEV__) {
-      console.log(data);
+      console.log(respond.data);
     }
-    this.dispatch(data);
+    this.dispatch(respond);
   }
 
   addressChanged(address) {
