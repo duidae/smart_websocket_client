@@ -7,9 +7,7 @@ import styles from '../assets/styles/components/history.css';
 
 var History = React.createClass({
   getInitialState() {
-    return {
-      requests: []
-    }
+    return HistoryStore.getState();
   },
 
   componentDidMount() {

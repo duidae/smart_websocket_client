@@ -1,5 +1,6 @@
 import alt from '../alt';
 
+const MAX_MESSAGE = 50;
 
 var historyDb = {};
 
@@ -72,7 +73,7 @@ class HistoryActions {
     historyDb.getAllRequestItems = function(successCallback) {
       var db = historyDb.db;
       db.transaction(function(tx) {
-        tx.executeSql("SELECT * FROM request ORDER BY id DESC LIMIT 5", [], successCallback,
+        tx.executeSql(`SELECT * FROM request ORDER BY id DESC LIMIT ${MAX_MESSAGE}`, [], successCallback,
           historyDb.onError);
       });
     };

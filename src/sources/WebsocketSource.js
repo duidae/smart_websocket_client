@@ -32,7 +32,8 @@ class WebsocketSource {
   send(contentStore) {
     let eventData = '';
     if(contentStore.useProtobuf) { // encode protobuf here
-      //eventData = this.encodeEvent(contentStore.eventName, contentStore.eventId, contentStore.payload);
+      eventData = '=== protobuf under construction ===';
+      //eventData = this._encodeEvent(contentStore.eventName, contentStore.eventId, contentStore.payload);
     }
     else {
       eventData = contentStore.eventName + contentStore.eventId + contentStore.payload;
@@ -87,7 +88,7 @@ class WebsocketSource {
     });
   }
 
-  encodeEvent(eventName, eventId, payload) {
+  _encodeEvent(eventName, eventId, payload) {
     let encodedMessage = '';
 
     if (eventName === "REGISTER_VIEWER") {
@@ -114,13 +115,13 @@ class WebsocketSource {
 
     let eventData = '';
     eventData = new Uint8Array(32 + 4 + encodedMessage.byteLength);
-    eventData.set(this.stringToUint8Array(eventName, 32));
+    eventData.set(this._stringToUint8Array(eventName, 32));
     eventData.set(new Uint8Array(new Uint32Array([eventId]).buffer), 32);
     eventData.set(encodedMessage, 36);
     return eventData;
   }
 
-  stringToUint8Array(str, padLength) {
+  _stringToUint8Array(str, padLength) {
     const bytes = new Uint8Array(padLength);
     for (let i = 0; i < Math.min(str.length, padLength); i++) {
         const charCode = str.charCodeAt(i);
