@@ -7,10 +7,7 @@ import buttonStyles from '../assets/styles/components/button.css'
 
 var Content = React.createClass({
   getInitialState() {
-    var contentStore = ContentStore.getState();
-    return {
-      contentStore: contentStore
-    }
+    return ContentStore.getState();
   },
 
   componentDidMount() {
@@ -22,51 +19,39 @@ var Content = React.createClass({
   },
 
   _onClick(){
-    WebsocketActions.sendData(this.state.contentStore);
+    WebsocketActions.sendData(this.state);
   },
 
   _onClear(){
-    this.state.contentStore.eventName = '';
-    this.state.contentStore.eventId = '';
-    this.state.contentStore.payload = '';
-    this.setState({
-      contentStore: this.state.contentStore
-    })
+    this.state.eventName = '';
+    this.state.eventId = '';
+    this.state.payload = '';
+    this.setState(this.state)
     WebsocketActions.requestDataChanged('');
   },
 
   _onChange(state) {
-    this.setState({
-      contentStore: this.state.contentStore
-    })
+    this.setState(state)
   },
 
-  _onCheck(){
-    this.state.contentStore.useProtobuf = !this.state.contentStore.useProtobuf;
-    this.setState({
-      contentStore: this.state.contentStore
-    })
+  _onCheck(state){
+    this.state.useProtobuf = !this.state.useProtobuf;
+    this.setState(state)
   },
 
   _onEventNameChange(event){
-    this.state.contentStore.eventName = event.target.value;
-    this.setState({
-      contentStore: this.state.contentStore
-    })
+    this.state.eventName = event.target.value;
+    this.setState(this.state)
   },
 
   _onEventIdChange(event){
-    this.state.contentStore.eventId = event.target.value;
-    this.setState({
-      contentStore: this.state.contentStore
-    })
+    this.state.eventId = event.target.value;
+    this.setState(this.state)
   },
 
   _onPayloadChange(event){
-    this.state.contentStore.payload = event.target.value;
-    this.setState({
-      contentStore: this.state.contentStore
-    })
+    this.state.payload = event.target.value;
+    this.setState(this.state)
   },
 
   render() {
@@ -76,19 +61,19 @@ var Content = React.createClass({
          <label className={styles.label}>Edit a message to send:</label>
         </div>
         <div>
-          <label className={styles.label}>Event name:</label><input value={this.state.contentStore.eventName} onChange={this._onEventNameChange}/>
+          <label className={styles.label}>Event name:</label><input value={this.state.eventName} onChange={this._onEventNameChange}/>
         </div>
         <div>
-          <label className={styles.label}>Event id:</label><input value={this.state.contentStore.eventId} onChange={this._onEventIdChange}/>
+          <label className={styles.label}>Event id:</label><input value={this.state.eventId} onChange={this._onEventIdChange}/>
         </div>
         <div>
           <label className={styles.label}>Event payload:</label>
           <button type="button" className={buttonStyles.button} onClick={this._onClick}>Send</button>
           <button type="button" className={buttonStyles.buttonClear} onClick={this._onClear}>Clear</button>
-          <input className={styles.input} type="checkbox" checked={this.state.contentStore.useProtobuf} onChange={this._onCheck}>Encode with protocol buffer</input>
+          <input className={styles.input} type="checkbox" checked={this.state.useProtobuf} onChange={this._onCheck}>Encode with protocol buffer</input>
         </div>
         <div>
-          <textarea className={styles.textarea} placeholder="Enter payload here..." value={this.state.contentStore.payload} onChange={this._onPayloadChange}></textarea>
+          <textarea className={styles.textarea} placeholder="Enter payload here..." value={this.state.payload} onChange={this._onPayloadChange}></textarea>
         </div>
       </div>
     );

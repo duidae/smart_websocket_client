@@ -90,33 +90,34 @@ class WebsocketSource {
   encodeEvent(eventName, eventId, payload) {
     let encodedMessage = '';
 
-    if (contentStore.eventName === "REGISTER_VIEWER") {
-      encodedMessage = CARTA.RegisterViewer.encode(eventData);
+    if (eventName === "REGISTER_VIEWER") {
+      encodedMessage = CARTA.RegisterViewer.encode(payload).finish();
     }
-    else if (contentStore.eventName === "FILE_LIST_REQUEST") {
-      encodedMessage = CARTA.FileListRequest.encode(eventData);
+    else if (eventName === "FILE_LIST_REQUEST") {
+      encodedMessage = CARTA.FileListRequest.encode(payload).finish();
     }
-    else if (contentStore.eventName === "FILE_INFO_REQUEST") {
-      encodedMessage = CARTA.FileInfoRequest.encode(eventData);
+    else if (eventName === "FILE_INFO_REQUEST") {
+      encodedMessage = CARTA.FileInfoRequest.encode(payload).finish();
     }
-    else if (contentStore.eventName === "OPEN_FILE") {
-      encodedMessage = CARTA.OpenFile.encode(eventData);
+    else if (eventName === "OPEN_FILE") {
+      encodedMessage = CARTA.OpenFile.encode(payload).finish();
     }
-    else if (contentStore.eventName === "CLOSE_FILE") {
-      encodedMessage = CARTA.CloseFile.encode(eventData);
+    else if (eventName === "CLOSE_FILE") {
+      encodedMessage = CARTA.CloseFile.encode(payload).finish();
     }
-    else if (contentStore.eventName === "SET_IMAGE_VIEW") {
-      encodedMessage = CARTA.SetImageView.encode(eventData);
+    else if (eventName === "SET_IMAGE_VIEW") {
+      encodedMessage = CARTA.SetImageView.encode(payload).finish();
     }
     else {
-      console.log(`Unsupported event response ${contentStore.eventName}`);
+      console.log(`Unsupported event response ${eventName}`);
     }
 
+    let eventData = '';
     eventData = new Uint8Array(32 + 4 + encodedMessage.byteLength);
     eventData.set(this.stringToUint8Array(eventName, 32));
     eventData.set(new Uint8Array(new Uint32Array([eventId]).buffer), 32);
     eventData.set(encodedMessage, 36);
-    return encodedMessage;
+    return eventData;
   }
 
   stringToUint8Array(str, padLength) {
