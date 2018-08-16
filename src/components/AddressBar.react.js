@@ -6,10 +6,7 @@ import buttonStyle from '../assets/styles/components/button.css'
 
 var AddressBar = React.createClass({
   getInitialState() {
-    var websocket = WebsocketStore.getState();
-    return {
-      websocket: websocket
-    };
+    return WebsocketStore.getState();
   },
 
   componentDidMount() {
@@ -22,16 +19,14 @@ var AddressBar = React.createClass({
   },
 
   _onChange(state) {
-    this.setState({
-      websocket: state
-    });
+    this.setState(state);
   },
 
   _onClick() {
-    if (this.state.websocket.connected) {
+    if (this.state.connected) {
       WebsocketActions.closeWebsocket();
     } else {
-      WebsocketActions.openWebsocket(this.state.websocket.address);
+      WebsocketActions.openWebsocket(this.state.address);
     }
   },
 
@@ -40,11 +35,11 @@ var AddressBar = React.createClass({
   },
 
   render() {
-    var text = this.state.websocket.connected ? 'Disconnect' : 'Connect';
+    var text = this.state.connected ? 'Disconnect' : 'Connect';
     return (
       <div className={styles.root}>
         <label className={styles.label}>URL:</label>
-        <input className={styles.input} type="text" placeholder="ws://localhost:3002" value={this.state.websocket.address} onChange={this._onAddressChange} />
+        <input className={styles.input} type="text" placeholder="ws://localhost:3002" value={this.state.address} onChange={this._onAddressChange} />
         <button className={buttonStyle.button} type="button" onClick={this._onClick}>{text}</button>
       </div>
     );

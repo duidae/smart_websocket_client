@@ -2,7 +2,6 @@ import alt from '../alt';
 import WebsocketActions from '../actions/WebsocketActions';
 import HistoryActions from '../actions/HistoryActions';
 
-
 class WebsocketStore {
   constructor() {
     this.connected = false;
@@ -10,6 +9,7 @@ class WebsocketStore {
     this.request_data = '';
     this.errorMessage = null;
     this.msg = [];
+    this.history = [];
 
     this.bindListeners({
       handleWebsocketOpened: WebsocketActions.WEBSOCKET_OPENED,

@@ -4,7 +4,6 @@ import HistoryStore from '../stores/HistoryStore';
 import HistoryActions from '../actions/HistoryActions';
 import styles from '../assets/styles/components/history.css';
 
-
 var History = React.createClass({
   getInitialState() {
     return HistoryStore.getState();

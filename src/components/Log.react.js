@@ -10,7 +10,6 @@ var Log = React.createClass({
 
   componentDidMount() {
     HistoryStore.listen(this._onChange);
-    HistoryActions.setupDatabase();
   },
 
   componentWillUnmount() {

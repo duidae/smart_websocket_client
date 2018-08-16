@@ -3,8 +3,7 @@ import WebsocketStore from '../stores/WebsocketStore'
 import styles from '../assets/styles/components/messages.css'
 import _ from 'lodash'
 
-
-var History = React.createClass({
+var Messages = React.createClass({
   getInitialState() {
     return {
       messages: []
@@ -24,7 +23,6 @@ var History = React.createClass({
       messages: state.errorMessage
     });
   },
-
 
   render() {
     var list = [];
@@ -51,4 +49,4 @@ var History = React.createClass({
   }
 });
 
-export default History;
+export default Messages;
