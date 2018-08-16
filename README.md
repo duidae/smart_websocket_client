@@ -2,7 +2,7 @@
 CARTA Websocket Client is a websocket tool to simulate websocket server/client for testing during development.
 
 # ScreenShot
-![demo](screenshots/CARTA-websocket-client.png)
+![demo](screenshots/carta-websocket-client.png)
 
 # Features
 * Integrate protocol buffer
