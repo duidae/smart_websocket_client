@@ -32,11 +32,11 @@ class WebsocketSource {
   send(contentStore) {
     let eventData = '';
     if(contentStore.useProtobuf) { // encode protobuf here
-      eventData = '=== protobuf under construction ===';
+      eventData = contentStore.eventName + ' ' + contentStore.eventId + ' ' + '=== protobuf under construction ===';
       //eventData = this._encodeEvent(contentStore.eventName, contentStore.eventId, contentStore.payload);
     }
     else {
-      eventData = contentStore.eventName + contentStore.eventId + contentStore.payload;
+      eventData = contentStore.eventName + ' ' + contentStore.eventId + ' ' + contentStore.payload;
     }
     if (this.connection && this.connection.readyState === WebSocket.OPEN) {
       if(__DEV__) {

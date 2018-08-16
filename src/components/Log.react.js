@@ -1,6 +1,5 @@
 import React from 'react';
 import HistoryStore from '../stores/HistoryStore';
-import HistoryActions from '../actions/HistoryActions';
 import styles from '../assets/styles/components/log.css';
 
 var Log = React.createClass({
@@ -17,15 +16,13 @@ var Log = React.createClass({
   },
 
   _onChange(state) {
-    this.setState({
-      requests: state.requests
-    });
+    this.setState(state);
   },
 
   render() {
     let log = '';
     for(let i = 0; i < this.state.requests.length; i++) {
-      log += (this.state.requests[i].id + ' ' + this.state.requests[i].type + ' ' + this.state.requests[i].data + '\n');
+      log += ('[' + this.state.requests[i].type + ' #' + this.state.requests[i].id + '] ' + this.state.requests[i].data + '\n');
     }
 
     return (
