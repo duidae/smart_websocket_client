@@ -1,5 +1,5 @@
 # CARTA Websocket Client
-CARTA Websocket Client is a websocket tool to simulate websocket server/client for testing during development.
+CARTA Websocket Client is a websocket tool to simulate websocket server/client for testing during new CARTA development.
 
 # ScreenShot
 ![demo](screenshots/carta-websocket-client.png)
