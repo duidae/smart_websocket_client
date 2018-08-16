@@ -5,12 +5,8 @@ CARTA Websocket Client is a websocket tool to simulate websocket server/client f
 ![demo](screenshots/carta-websocket-client.png)
 
 # Features
-* Integrate protocol buffer
-
-# Future Features
-* Remember history input like some web api testing tools(postman) does.
 * Create fake messages for testing. This is useful if the backend is not ready yet but you want to develop your frontend code now(going to be implemented).
-* Account system, you can share the messages to your team. 
+* Integrate protocol buffer
 
 # Install && Build
 ### 1. Install necessary packages
