@@ -73,9 +73,9 @@ var Content = React.createClass({
         </div>
         <div>
           <label className={styles.label}>Event payload:</label>
+          <input className={styles.input} type="checkbox" checked={this.state.useProtobuf} onChange={this._onCheck}>Encode with protocol buffer</input>
           <button type="button" className={buttonStyles.button} onClick={this._onClick}>Send</button>
           <button type="button" className={buttonStyles.buttonClear} onClick={this._onClear}>Clear</button>
-          <input className={styles.input} type="checkbox" checked={this.state.useProtobuf} onChange={this._onCheck}>Encode with protocol buffer</input>
         </div>
         <div>
           <textarea className={styles.textarea} placeholder="Enter payload here..." value={this.state.payload} onChange={this._onPayloadChange}></textarea>
