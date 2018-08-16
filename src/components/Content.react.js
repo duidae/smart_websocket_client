@@ -23,35 +23,40 @@ var Content = React.createClass({
   },
 
   _onClear(){
-    this.state.eventName = '';
-    this.state.eventId = '';
-    this.state.payload = '';
-    this.setState(this.state)
+    this.setState({
+      eventName: '',
+      eventId: '',
+      payload: '',
+    });
     WebsocketActions.requestDataChanged('');
   },
 
   _onChange(state) {
-    this.setState(state)
+    this.setState(state);
   },
 
-  _onCheck(state){
-    this.state.useProtobuf = !this.state.useProtobuf;
-    this.setState(state)
+  _onCheck(){
+    this.setState({
+      useProtobuf: !this.state.useProtobuf
+    });
   },
 
   _onEventNameChange(event){
-    this.state.eventName = event.target.value;
-    this.setState(this.state)
+    this.setState({
+      eventName: event.target.value
+    });
   },
 
   _onEventIdChange(event){
-    this.state.eventId = event.target.value;
-    this.setState(this.state)
+    this.setState({
+      eventId: event.target.value
+    });
   },
 
   _onPayloadChange(event){
-    this.state.payload = event.target.value;
-    this.setState(this.state)
+    this.setState({
+      payload: event.target.value
+    });
   },
 
   render() {
