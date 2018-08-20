@@ -20,7 +20,7 @@ class HistoryActions {
 
     historyDb.open = function() {
       var dbSize = 10 * 1024 * 1024; // 10MB
-      historyDb.db = openDatabase('Request', '1', 'Request history', dbSize);
+      historyDb.db = openDatabase('Message', '1', 'Request history', dbSize);
     };
 
     historyDb.onError = function(tx, e) {
@@ -46,15 +46,15 @@ class HistoryActions {
       var db = historyDb.db;
       db.transaction(function(tx) {
         tx.executeSql("CREATE TABLE IF NOT EXISTS " +
-        "request(id INTEGER PRIMARY KEY ASC, address TEXT, data TEXT)", []);
+        "msg(id INTEGER PRIMARY KEY ASC, address TEXT, type TEXT, data TEXT)", []);
       })
     };
 
     historyDb.addRequest = function(request) {
       var db = historyDb.db;
       db.transaction(function(tx){
-        tx.executeSql("INSERT INTO request(address, data) VALUES (?,?)",
-          [request.address, request.data],
+        tx.executeSql("INSERT INTO msg(address, type, data) VALUES (?,?,?)",
+          [request.address, request.type, request.data],
           historyDb.onInsertSuccess(request),
           historyDb.onError);
       });
@@ -63,7 +63,7 @@ class HistoryActions {
     historyDb.deleteRequest = function(requestId) {
       var db = historyDb.db;
       db.transaction(function(tx){
-        tx.executeSql("DELETE FROM request WHERE id=?",
+        tx.executeSql("DELETE FROM msg WHERE id=?",
           [requestId],
           historyDb.onDeleteSuccess(requestId),
           historyDb.onError);
@@ -73,7 +73,7 @@ class HistoryActions {
     historyDb.getAllRequestItems = function(successCallback) {
       var db = historyDb.db;
       db.transaction(function(tx) {
-        tx.executeSql(`SELECT * FROM request ORDER BY id DESC LIMIT ${MAX_MESSAGE}`, [], successCallback,
+        tx.executeSql(`SELECT * FROM msg ORDER BY id DESC LIMIT ${MAX_MESSAGE}`, [], successCallback,
           historyDb.onError);
       });
     };
@@ -85,11 +85,10 @@ class HistoryActions {
     historyDb.clear = function() {
       var db = historyDb.db;
       db.transaction(function(tx) {
-        tx.executeSql("DELETE FROM request", [], historyDb.onClearSuccess,
+        tx.executeSql("DELETE FROM msg", [], historyDb.onClearSuccess,
           historyDb.onError);
       });
     };
-
 
     historyDb.open();
     historyDb.createTable();
