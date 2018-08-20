@@ -83,6 +83,7 @@ class WebsocketSource {
 
   _onMessage(event) {
     self.emit(MESSAGE_EVENT, {
+      address: event.target.url,
       type: "Server respond",
       data: event.data
     });
