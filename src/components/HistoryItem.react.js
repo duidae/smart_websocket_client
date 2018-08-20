@@ -21,7 +21,7 @@ var HistoryItem = React.createClass({
 
     return (
       <li className={styles.itemContainer}>
-        <label className={styles.item} onClick={this._onClick}>Request #{request.id}</label>
+        <label className={styles.item} onClick={this._onClick}>Message #{request.id}</label>
         <button className={styles.destroy} type="button" onClick={this._onDestroyClick}></button>
       </li>
     );

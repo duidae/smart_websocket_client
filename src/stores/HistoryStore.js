@@ -7,6 +7,7 @@ class HistoryStore {
     this.requests = [];
     this.bindListeners({
       handleNewRequest: WebsocketActions.DATA_SENT,
+      handleNewRespond: WebsocketActions.WEBSOCKET_RECEIVED,
       handleRequestsLoaded: HistoryActions.REQUESTS_LOADED,
       handleRequestAdded: HistoryActions.REQUEST_ADDED,
       handleRequestDestroyed: HistoryActions.REQUEST_DESTROYED
@@ -19,6 +20,10 @@ class HistoryStore {
 
   handleNewRequest(request) {
     HistoryActions.addRequest(request);
+  }
+
+  handleNewRespond(respond) {
+    HistoryActions.addRequest(respond);
   }
 
   // the request has been added into database
