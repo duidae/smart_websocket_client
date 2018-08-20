@@ -1,6 +1,6 @@
 import alt from '../alt';
 
-const MAX_MESSAGE = 50;
+const MAX_MESSAGE = 150;
 
 var historyDb = {};
 
