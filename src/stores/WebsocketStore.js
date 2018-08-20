@@ -5,7 +5,7 @@ import HistoryActions from '../actions/HistoryActions';
 class WebsocketStore {
   constructor() {
     this.connected = false;
-    this.address = 'ws://localhost:3002';
+    this.address = 'ws://localhost:3002/';
     this.request_data = '';
     this.errorMessage = null;
     this.msg = [];
