@@ -28,8 +28,7 @@ var Log = React.createClass({
     return (
       <div className={styles.root}>
         <div className={styles.control}>
-         <label className={styles.label}>Log: </label>
-         <input className={styles.input} type="checkbox">Decode with protocol buffer</input>
+         <label className={styles.label}>Log: (decoding with protocol buffer by default)</label>
         </div>
         <textarea className={styles.textarea} value={log} readOnly={true} editorProps={{$blockScrolling: Infinity}}></textarea>
       </div>

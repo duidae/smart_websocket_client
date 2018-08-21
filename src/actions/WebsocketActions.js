@@ -47,7 +47,7 @@ class WebsocketActions {
 
     // debug message
     if(__DEV__) {
-      console.log('Using protobuf:', contentStore.useProtobuf);
+      console.log('Encode using protobuf:', contentStore.useProtobuf);
       console.log('Eventname:', contentStore.eventName);
       console.log('EventId:', contentStore.eventId);
       console.log('Payload:', contentStore.payload);
@@ -75,10 +75,12 @@ class WebsocketActions {
   }
 
   websocketReceived(respond) {
+    // debug message
     if(__DEV__) {
       console.log(respond.data);
+      //console.log(self._messageHandler(respond));
     }
-    this.dispatch(respond);
+    this.dispatch(self._messageHandler(respond));
   }
 
   addressChanged(address) {
@@ -129,6 +131,71 @@ class WebsocketActions {
         bytes[i] = (charCode <= 0xFF ? charCode : 0);
     }
     return bytes;
+  }
+
+  _messageHandler(respond) {
+    if (respond.data.byteLength < 40) {
+        console.log("Unknown event format");
+        return {
+          address: respond.address,
+          type: respond.type,
+          data: 'Unknown event format'
+        };
+    }
+
+    const eventName = self._getEventName(new Uint8Array(respond.data, 0, 32));
+    const eventId = new Uint32Array(respond.data, 32, 1)[0];
+    const eventData = new Uint8Array(respond.data, 36);
+
+    try {
+      let parsedMessage;
+      if (eventName === "REGISTER_VIEWER_ACK") {
+        parsedMessage = CARTA.RegisterViewerAck.decode(eventData);
+      }
+      else if (eventName === "FILE_LIST_RESPONSE") {
+        parsedMessage = CARTA.FileListResponse.decode(eventData);
+      }
+      else if (eventName === "FILE_INFO_RESPONSE") {
+        parsedMessage = CARTA.FileInfoResponse.decode(eventData);
+      }
+      else if (eventName === "OPEN_FILE_ACK") {
+        parsedMessage = CARTA.OpenFileAck.decode(eventData);
+      }
+      else if (eventName === "RASTER_IMAGE_DATA") {
+        parsedMessage = CARTA.RasterImageData.decode(eventData);
+      }
+      else if (eventName === "REGION_HISTOGRAM_DATA") {
+        parsedMessage = CARTA.RegionHistogramData.decode(eventData);
+      }
+      else {
+        parsedMessage = 'Unsupported event response';
+      }
+        
+      return {
+        address: respond.address,
+        type: respond.type,
+        data: eventName + ' ' + eventId + ' ' + parsedMessage
+      };
+    } catch (e) {
+      console.log(e);
+      
+      return {
+        address: respond.address,
+        type: respond.type,
+        data: 'decode exception: ' + e 
+      };
+    }
+  }
+
+  _getEventName(byteArray) {
+    if (!byteArray || byteArray.length < 32) {
+        return "";
+    }
+    const nullIndex = byteArray.indexOf(0);
+    if (nullIndex >= 0) {
+        byteArray = byteArray.slice(0, byteArray.indexOf(0));
+    }
+    return String.fromCharCode.apply(null, byteArray);
   }
 }
 
