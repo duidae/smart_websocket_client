@@ -1,7 +1,7 @@
 import assign from 'object-assign'
 import EventEmitter from 'events'
 
-import CARTA from 'carta-protobuf';
+import {CARTA} from 'carta-protobuf';
 
 export const OPEN_EVENT = 'open';
 export const CLOSE_EVENT = 'close';
@@ -32,8 +32,8 @@ class WebsocketSource {
   send(contentStore) {
     let eventData = '';
     if(contentStore.useProtobuf) { // encode protobuf here
-      eventData = contentStore.eventName + ' ' + contentStore.eventId + ' ' + '=== protobuf under construction ===';
-      //eventData = this._encodeEvent(contentStore.eventName, contentStore.eventId, contentStore.payload);
+      //eventData = contentStore.eventName + ' ' + contentStore.eventId + ' ' + '=== protobuf under construction ===';
+      eventData = this._encodeEvent(contentStore.eventName, contentStore.eventId, contentStore.payload);
     }
     else {
       eventData = contentStore.eventName + ' ' + contentStore.eventId + ' ' + contentStore.payload;
