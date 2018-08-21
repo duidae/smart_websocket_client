@@ -24,9 +24,7 @@ var Content = React.createClass({
 
   _onClear(){
     this.setState({
-      eventName: '',
-      eventId: '',
-      payload: '',
+      payload: ''
     });
     WebsocketActions.requestDataChanged('');
   },
